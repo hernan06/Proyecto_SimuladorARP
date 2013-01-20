@@ -1,0 +1,41 @@
+'''
+Created on 15/01/2013
+
+@author: Hernan
+'''
+import pygame
+
+class ARP_request():
+    
+    def __init__(self,x,y,HostS,HostD):
+        self.Arp_message=None
+        self.ipSource=None
+        self.macSource=None
+        self.ipDestination=None
+        self.macDestination="FF:FF:FF:FF:FF:FF"
+        self.Arp_message=self.createSprite(x,y,"arp_request2.jpg")        
+        self.ipSource=HostS.adressIP
+        self.macSource=HostS.adressMac
+        self.ipDestination=HostD.adressIP
+        self.macDestination=HostD.adressMac
+        self.display=pygame.display.get_surface()
+    
+    def createSprite(self,x,y,adr):
+        s1 = pygame.sprite.Sprite()
+        s1.image = pygame.image.load(adr).convert_alpha()
+        s1.rect = s1.image.get_rect()
+        (s1.rect.left, s1.rect.top) = (x,y)
+        return s1
+    
+    def MoveARP(self,dir):
+        if(dir==1):
+            Vx=1
+            Vy=0
+        else:
+            Vx=-1
+            Vy=0
+        self.Arp_message.rect.move_ip(Vx,Vy)
+        
+        
+    def update(self,screen):
+        screen.blit(self.Arp_message.image,self.Arp_message.rect)
