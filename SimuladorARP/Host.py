@@ -14,7 +14,7 @@ class Host(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.adressIP=None
         self.adressMac=None
-        self.IpHost=[]
+        self.Ips=[]
         self.registro=None
         
         self.image = pygame.image.load("HOST.jpg")
@@ -24,11 +24,15 @@ class Host(pygame.sprite.Sprite):
         
         self.adressIP=ip
         self.adressMac=mac
-        self.IpHost.append([self.adressIP,self.adressMac])
+        self.Ips.append([self.adressIP,self.adressMac])
         
         
     def insert(self,ip,mac):
-        self.IpHost.append([ip,mac])
+        date=[ip,mac]
+        for register in self.Ips:
+            if register==date:
+                return
+        self.Ips.append([ip,mac])
           
     def createSprite(self,x,y,adr):
         s1 = pygame.sprite.Sprite()
@@ -48,7 +52,7 @@ class Host(pygame.sprite.Sprite):
     def UpdateTable(self,screen,f):
         x=self.arp_table.rect.left
         y=self.arp_table.rect.bottom
-        for register in self.IpHost:
+        for register in self.Ips:
             self.registro=self.createSprite(x, y,"registro.jpg")
             screen.blit(self.registro.image,self.registro.rect)
             if(f==0):

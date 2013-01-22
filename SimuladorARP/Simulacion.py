@@ -11,6 +11,7 @@ from Bus import Bus
 from pygame.gp2x.constants import BUTTON_A
 from ARP_request import ARP_request
 from ARP_reply import ARP_reply 
+from Ping import Ping
 
 class Simulacion():
     
@@ -23,6 +24,7 @@ class Simulacion():
         self.arp_repply=None
         self.Bus1=None
         self.panel=None
+        self.ping=None
         self.panelList=[]
         self.exit1=pygame.image.load("button_back1.jpg")
         self.exit2=pygame.image.load("button_back2.jpg")
@@ -157,10 +159,12 @@ class Simulacion():
                         flag1=1
                         flagC=True
                         self.panelList=[]
+                        self.element1.Ips.pop(1)
+                        self.element2.Ips.pop(1)
                     if events.button == 1: 
                         if self.element1.rect.collidepoint(x,y):
                             SetSource=True
-                            x1,y1=self.element1.rect.left,self.element1.rect.top
+                            x1,y1=self.element1.rect.right+2,self.element1.rect.top
                             flagSource=1
                             self.panelList.append([self.element1.adressIP,self.element1.adressMac,1])
                         if self.element2.rect.collidepoint(x,y):
@@ -190,14 +194,26 @@ class Simulacion():
                 if(flagSource==1):
                     if(self.element2.rect.colliderect(self.arp_request.Arp_message.rect)):
                         if(self.arp_repply.Arp_message.rect.colliderect(self.element1.rect)):
-                            move=0
+                            move=3
+                            self.ping=Ping(x1,y1)
+                            dir=1
                             SetDestination=False
                             SetSource=False
                             flag1=1
                             flagC=True
+                            self.element1.insert(self.element2.adressIP,self.element2.adressMac)
+                            while move==3:
+                                if self.ping.message.rect.colliderect(self.element2.rect):
+                                    dir=2
+                                if self.ping.message.rect.colliderect(self.element1.rect):
+                                    move=0
+                                screen.fill((255,255,255))                 
+                                self.ping.MovePing(dir)
+                                self.update(screen,move,flagSource)
+                                self.ping.update(screen)
+                                pygame.display.update()
                             self.panelList=[]
                             pygame.mouse.set_visible(True)
-                            self.element1.insert(self.element2.adressIP,self.element2.adressMac)
                         else:
                             if(flag1==1):
                                 self.element2.insert(self.element1.adressIP,self.element1.adressMac)
@@ -209,14 +225,27 @@ class Simulacion():
                 else:
                     if(self.element1.rect.colliderect(self.arp_request.Arp_message.rect)):
                         if(self.arp_repply.Arp_message.rect.colliderect(self.element2.rect)):
-                            move=0
+                            move=3
                             SetDestination=False
                             SetSource=False
                             flag1=1
                             flagC=True
                             pygame.mouse.set_visible(True)
-                            self.panelList=[]
+                            self.ping=Ping(x1-131,y1)
+                            dir=2
                             self.element2.insert(self.element1.adressIP,self.element1.adressMac)
+                            while move==3:
+                                if self.ping.message.rect.colliderect(self.element1.rect):
+                                    dir=1
+                                if self.ping.message.rect.colliderect(self.element2.rect):
+                                    move=0
+                                screen.fill((255,255,255))                 
+                                self.ping.MovePing(dir)
+                                self.update(screen,move,flagSource)
+                                self.ping.update(screen)
+                                pygame.display.update()
+                            self.panelList=[]
+                            
                         else:
                             if(flag1==1):
                                 self.element1.insert(self.element2.adressIP,self.element2.adressMac)
@@ -226,6 +255,9 @@ class Simulacion():
                         move=1
             self.update(screen,move,flagSource)
             pygame.display.update()
+    
+    
+    
     
     def SendARP(self,x1,y1,x2,y2,flagSource):
         if flagSource==1:

@@ -14,7 +14,7 @@ class Router(pygame.sprite.Sprite):
         self.adressIP=None
         self.adressMac=None
         self.arp_table=None
-        self.IpRouter=[]
+        self.Ips=[]
         self.ListHost=[]
         self.registro=None
         
@@ -25,7 +25,7 @@ class Router(pygame.sprite.Sprite):
         
         self.adressIP=ip
         self.adressMac=mac
-        self.IpRouter.append([self.adressIP,self.adressMac])
+        self.Ips.append([self.adressIP,self.adressMac])
     
     def createSprite(self,x,y,adr):
         s1 = pygame.sprite.Sprite()
@@ -35,7 +35,11 @@ class Router(pygame.sprite.Sprite):
         return s1 
     
     def insert(self,ip,mac):
-        self.IpRouter.append([ip,mac]) 
+        date=[ip,mac]
+        for register in self.Ips:
+            if register==date:
+                return
+        self.Ips.append([ip,mac]) 
         
     def update(self,screen,f):
         screen.blit(self.image,self.rect)
@@ -45,7 +49,7 @@ class Router(pygame.sprite.Sprite):
     def UpdateTable(self,screen,f):
         x=self.arp_table.rect.left
         y=self.arp_table.rect.bottom
-        for register in self.IpRouter:
+        for register in self.Ips:
             self.registro=self.createSprite(x, y,"registro.jpg")
             screen.blit(self.registro.image,self.registro.rect)
             if(f==0):
