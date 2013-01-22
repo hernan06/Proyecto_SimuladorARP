@@ -13,7 +13,7 @@ class ARP_request():
         self.macSource=None
         self.ipDestination=None
         self.macDestination="FF:FF:FF:FF:FF:FF"
-        self.Arp_message=self.createSprite(x,y,"arp_request2.jpg")        
+        self.Arp_message=self.createSprite(x,y,"Images/arp_request2.jpg")        
         self.ipSource=HostS.adressIP
         self.macSource=HostS.adressMac
         self.ipDestination=HostD.adressIP
@@ -31,11 +31,16 @@ class ARP_request():
         if(dir==1):
             Vx=1
             Vy=0
-        else:
+        if(dir==2):
             Vx=-1
             Vy=0
+        if(dir==3):
+            Vx=0
+            Vy=-1
+        if(dir==4):
+            Vx=0
+            Vy=1
         self.Arp_message.rect.move_ip(Vx,Vy)
-        
         
     def update(self,screen):
         screen.blit(self.Arp_message.image,self.Arp_message.rect)

@@ -17,10 +17,10 @@ class Host(pygame.sprite.Sprite):
         self.Ips=[]
         self.registro=None
         
-        self.image = pygame.image.load("HOST.jpg")
+        self.image = pygame.image.load("Images/HOST.jpg")
         self.rect = self.image.get_rect()
         self.rect.left,self.rect.top=x,y
-        self.arp_table=self.createSprite(self.rect.left,self.rect.bottom, "arp_table.jpg")
+        self.arp_table=self.createSprite(self.rect.left,self.rect.bottom, "Images/arp_table.jpg")
         
         self.adressIP=ip
         self.adressMac=mac
@@ -53,7 +53,7 @@ class Host(pygame.sprite.Sprite):
         x=self.arp_table.rect.left
         y=self.arp_table.rect.bottom
         for register in self.Ips:
-            self.registro=self.createSprite(x, y,"registro.jpg")
+            self.registro=self.createSprite(x, y,"Images/registro.jpg")
             screen.blit(self.registro.image,self.registro.rect)
             if(f==0):
                 tmp=register

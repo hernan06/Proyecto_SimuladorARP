@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "Main.py", line 30, in <module>
+  File "Main.py", line 18, in main
+  File "Palette.pyo", line 29, in __init__
+pygame.error: Couldn't open Case1.1.jpg
+Traceback (most recent call last):
+  File "Main.py", line 30, in <module>
+  File "Main.py", line 18, in main
+  File "Palette.pyo", line 29, in __init__
+pygame.error: Couldn't open Case1.1.jpg

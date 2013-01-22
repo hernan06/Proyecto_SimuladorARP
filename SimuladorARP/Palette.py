@@ -10,32 +10,36 @@ from Bus import Bus
 pygame.init()
 
 class Palette():
-    case1=None
-    case2=None
-    case3=None
-    case4=None
-    case5=None
-    element1=None
-    element2=None
-    button_exit=None
-    button_next=None
-    Bus1=None
-    case11=pygame.image.load("Case1.1.jpg")
-    case12=pygame.image.load("Case1.2.jpg")
-    case21=pygame.image.load("Case2.1.jpg")
-    case22=pygame.image.load("Case2.2.jpg")
-    case31=pygame.image.load("Case3.1.jpg")
-    case32=pygame.image.load("Case3.2.jpg")
-    case41=pygame.image.load("Case4.1.jpg")
-    case42=pygame.image.load("Case4.2.jpg")
-    case51=pygame.image.load("Case5.1.jpg")
-    case52=pygame.image.load("Case5.2.jpg")
-    exit1=pygame.image.load("button_exit1.jpg")
-    exit2=pygame.image.load("button_exit2.jpg")
-    next1=pygame.image.load("button_next1.jpg")
-    next2=pygame.image.load("button_next2.jpg")
+    
     
     def __init__(self):
+        self.case1=None
+        self.case2=None
+        self.case3=None
+        self.case4=None
+        self.case5=None
+        self.element1=None
+        self.element2=None
+        self.element3=None
+        self.element4=None
+        self.button_exit=None
+        self.button_next=None
+        self.Bus1=None
+        self.Bus2=None
+        self.case11=pygame.image.load("Images/Case1.1.jpg")
+        self.case12=pygame.image.load("Images/Case1.2.jpg")
+        self.case21=pygame.image.load("Images/Case2.1.jpg")
+        self.case22=pygame.image.load("Images/Case2.2.jpg")
+        self.case31=pygame.image.load("Images/Case3.1.jpg")
+        self.case32=pygame.image.load("Images/Case3.2.jpg")
+        self.case41=pygame.image.load("Images/Case4.1.jpg")
+        self.case42=pygame.image.load("Images/Case4.2.jpg")
+        self.case51=pygame.image.load("Images/Case5.1.jpg")
+        self.case52=pygame.image.load("Images/Case5.2.jpg")
+        self.exit1=pygame.image.load("Images/button_exit1.jpg")
+        self.exit2=pygame.image.load("Images/button_exit2.jpg")
+        self.next1=pygame.image.load("Images/button_next1.jpg")
+        self.next2=pygame.image.load("Images/button_next2.jpg")
         self.createPalette()
         self.display=pygame.display.get_surface()
     
@@ -108,10 +112,26 @@ class Palette():
         self.element2=Host(900,200,0,0)
         self.Bus1=Bus(300,205,900,205)
         
+    def createCase5(self):
+        self.element1=Host(300,200,0,0)
+        self.element2=Host(1000,200,0,0)
+        self.element3=Router(650,200,0,0)
+        self.element4=Host(650,400,0,0)
+        self.Bus1=Bus(300,205,1000,205)
+        self.Bus2=Bus(660,200,660,400)
+           
     def update(self,screen):  
         self.Bus1.drawpoint(screen)
         self.element1.update(screen,1)
         self.element2.update(screen,1)
+    
+    def update5(self,screen):
+        self.Bus1.drawpoint(screen)
+        self.Bus2.drawpoint(screen)
+        self.element1.update(screen,1)
+        self.element2.update(screen,1)
+        self.element3.update(screen,1)
+        self.element4.update(screen,1)
         
     def createSprite(self,x,y,adr):
         s1 = pygame.sprite.Sprite()
@@ -121,13 +141,13 @@ class Palette():
         return s1   
     
     def createPalette(self):
-        self.case1=self.createSprite(10,40,"Case1.1.jpg")
-        self.case2=self.createSprite(self.case1.rect.left,self.case1.rect.bottom+20,"Case2.1.jpg")
-        self.case3=self.createSprite(self.case2.rect.left,self.case2.rect.bottom+20,"Case3.1.jpg")
-        self.case4=self.createSprite(self.case3.rect.left,self.case3.rect.bottom+20,"Case4.1.jpg")
-        self.case5=self.createSprite(self.case4.rect.left,self.case4.rect.bottom+20,"Case5.1.jpg")
-        self.button_exit=self.createSprite(1200, 5,"button_exit1.jpg")
-        self.button_next=self.createSprite(1200, 670,"button_next1.jpg")
+        self.case1=self.createSprite(10,40,"Images/Case1.1.jpg")
+        self.case2=self.createSprite(self.case1.rect.left,self.case1.rect.bottom+20,"Images/Case2.1.jpg")
+        self.case3=self.createSprite(self.case2.rect.left,self.case2.rect.bottom+20,"Images/Case3.1.jpg")
+        self.case4=self.createSprite(self.case3.rect.left,self.case3.rect.bottom+20,"Images/Case4.1.jpg")
+        self.case5=self.createSprite(self.case4.rect.left,self.case4.rect.bottom+20,"Images/Case5.1.jpg")
+        self.button_exit=self.createSprite(1200, 5,"Images/button_exit1.jpg")
+        self.button_next=self.createSprite(1200, 670,"Images/button_next1.jpg")
         
     def ARPDesign(self,screen):
         c1 = pygame.time.Clock()
@@ -188,8 +208,10 @@ class Palette():
             c1.tick(100)
             screen.fill((255,255,255))
             self.updatePalette()
-            if(Case1Pressed or Case2Pressed or Case3Pressed or Case4Pressed or Case5Pressed):
+            if(Case1Pressed or Case2Pressed or Case3Pressed or Case4Pressed):
                 self.update(screen)
+            if(Case5Pressed):
+                self.update5(screen)
             pygame.display.update()
         if(Case1Pressed):
             return 1

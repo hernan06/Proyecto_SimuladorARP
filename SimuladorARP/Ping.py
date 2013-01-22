@@ -7,7 +7,8 @@ import pygame
 
 class Ping():
     def __init__(self,x,y):
-        self.message=self.createSprite(x,y,"Ping.jpg")
+        self.message=None
+        self.message=self.createSprite(x,y,"Images/Ping.jpg")
         
     def createSprite(self,x,y,adr):
         s1 = pygame.sprite.Sprite()
@@ -20,9 +21,15 @@ class Ping():
         if(dir==1):
             Vx=1
             Vy=0
-        else:
+        if(dir==2):
             Vx=-1
             Vy=0
+        if(dir==3):
+            Vx=0
+            Vy=-1
+        if(dir==4):
+            Vx=0
+            Vy=1
         self.message.rect.move_ip(Vx,Vy)
     
     def update(self,screen):

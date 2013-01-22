@@ -20,9 +20,12 @@ def main():
     while True and exit!=0:
         c1.tick(100)
         exit=Palette1.ARPDesign(screen)
-        if(exit!=0):
+        if(exit>0 and exit<5):
             Simulacion1=Simulacion()
             Simulacion1.ARPSimulation(screen,exit)
-    
+        else:
+            if(exit==5):
+                Simulacion1=Simulacion()
+                Simulacion1.ARPSimulationCase5(screen)
 main()
     
